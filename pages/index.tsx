@@ -10,7 +10,7 @@ function Index(props: IndexProps) {
 
   return (
     <div>
-      <h1>My Todo List</h1>
+      <h1 className="bg-red-400">My Todo List</h1>
       <h2>Click On Todo to see it individually</h2>
       {/* MAPPING OVER THE TODOS */}
       {genres.map(t => (

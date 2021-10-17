@@ -1,11 +1,11 @@
-import { Genre } from "../utils/types"
+import { Genre } from "utils/types"
 import Link from "next/link"
 
-interface IndexProps {
+interface HomeProps {
   genres: Array<Genre>
 }
 
-function Index(props: IndexProps) {
+function Home(props: HomeProps) {
   const { genres } = props
 
   return (
@@ -34,4 +34,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default Index
+export default Home

@@ -12,7 +12,6 @@ function Index(props: IndexProps) {
     <div>
       <h1 className="bg-red-400">My Todo List</h1>
       <h2>Click On Todo to see it individually</h2>
-      {/* MAPPING OVER THE TODOS */}
       {genres.map(t => (
         <div key={t._id}>
           <Link href={`/todos/${t._id}`}>
@@ -26,13 +25,10 @@ function Index(props: IndexProps) {
   )
 }
 
-// GET PROPS FOR SERVER SIDE RENDERING
 export async function getServerSideProps() {
-  // get todo data from API
   const res = await fetch(process.env.API_URL as string)
   const genres = await res.json()
 
-  // return props
   return {
     props: { genres },
   }

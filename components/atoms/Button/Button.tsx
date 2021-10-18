@@ -1,32 +1,38 @@
 import React from 'react';
-import './button.css';
+import Interface from './Button.interface';
 
-interface ButtonProps {
-  primary?: boolean;
-  backgroundColor?: string;
-  size?: 'small' | 'medium' | 'large';
-  label: string;
-  onClick?: () => void;
-  color?: string;
-}
+const Button = ({
+  primary, size, backgroundColor, label, ...props
+}: Interface) => {
+  const base = 'cursor-pointer font-bold border-0 rounded-3xl inline-block inline-block';
 
-export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  color,
-  ...props
-}: ButtonProps) => {
-  const mode = primary ? 'bg-red-400' : 'storybook-button--secondary';
+  const mode = primary
+    ? 'bg-blue-500 text-white'
+    : 'bg-transparent text-gray-500 shadow-xl';
+
+  const dimensions = {
+    small: 'text-xs py-2.5 px-4',
+    medium: 'text-sm py-3 px-5',
+    large: 'text-base py-3.5 p-6',
+  };
+
   return (
     <button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={{ backgroundColor, color }}
+      className={[base, dimensions[size], mode].join(' ')}
+      style={{ backgroundColor }}
       {...props}
     >
       {label}
     </button>
   );
 };
+
+Button.defaultProps = {
+  backgroundColor: '',
+  onClick: null,
+  primary: false,
+  size: 'medium',
+};
+
+export default Button;

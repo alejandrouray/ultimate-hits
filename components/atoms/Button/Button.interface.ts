@@ -1,9 +1,8 @@
-interface Button {
-  backgroundColor?: string;
+interface IButton {
   label: string;
   onClick?: () => void;
   primary?: boolean;
   size: 'small' | 'medium' | 'large';
 }
 
-export default Button;
+export default IButton;

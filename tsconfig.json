@@ -22,6 +22,6 @@
       "@/utils/*": ["utils/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".eslintrc.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "*.js", ".eslintrc.js"],
   "exclude": ["node_modules"]
 }

@@ -1,26 +1,25 @@
 import React from 'react';
-import Interface from './Button.interface';
+import IButton from './Button.interface';
 
 const Button = ({
-  primary, size, backgroundColor, label, ...props
-}: Interface) => {
-  const base = 'cursor-pointer font-bold border-0 rounded-3xl inline-block inline-block';
+  primary, size, label, ...props
+}: IButton): JSX.Element => {
+  const BASE = 'border-0 cursor-pointer font-bold inline-block rounded-lg';
 
   const mode = primary
-    ? 'bg-blue-500 text-white'
-    : 'bg-transparent text-gray-500 shadow-xl';
+    ? 'bg-primary text-white'
+    : 'bg-white shadow-xl text-gray-500';
 
   const dimensions = {
-    small: 'text-xs py-2.5 px-4',
-    medium: 'text-sm py-3 px-5',
-    large: 'text-base py-3.5 p-6',
+    small: 'px-4 py-2.5 text-xs',
+    medium: 'px-5 py-3 text-sm',
+    large: 'px-6 py-3.5 text-base',
   };
 
   return (
     <button
+      className={[BASE, dimensions[size], mode].join(' ')}
       type="button"
-      className={[base, dimensions[size], mode].join(' ')}
-      style={{ backgroundColor }}
       {...props}
     >
       {label}
@@ -29,7 +28,6 @@ const Button = ({
 };
 
 Button.defaultProps = {
-  backgroundColor: '',
   onClick: null,
   primary: false,
   size: 'medium',

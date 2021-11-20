@@ -11,9 +11,11 @@ module.exports = {
       },
       colors: {
         primary: '#2563EB',
+        secondary: 'black',
       },
       gridTemplateColumns: {
-        inputIcon: '10% auto',
+        buttonIcon: '30px auto',
+        inputIcon: '30px auto',
         login: '1fr 4fr 1fr',
       },
       height: {
@@ -23,7 +25,12 @@ module.exports = {
         2.5: '2.5rem',
       },
     },
+    ripple: theme => ({
+        colors: theme('colors')
+    }),
   },
   variant: {},
-  plugins: [],
+  plugins: [
+    require('tailwindcss-ripple')()
+  ],
 };

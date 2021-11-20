@@ -1,40 +1,33 @@
 import React from 'react';
-import * as FontAwesomeIcons from 'react-icons/fa';
+import Icon from '../Icon/Icon';
 import IButton from './Button.interface';
+import styles from './Button.styles';
 
 const Button = ({
-  color, dark, icon, primary, size, label, ...props
+  color, icon, primary, size, label, submit, ...props
 }: IButton): JSX.Element => {
-  const BASE = 'border-2 cursor-pointer font-bold inline-block rounded-lg';
-
   const mode = primary
-    ? 'bg-primary text-white'
-    : `${color} ${dark ? 'text-white' : 'text-gray-500'}`;
+    ? styles.primary
+    : color || styles.secondary;
 
-  const dimensions = {
-    small: 'px-4 py-2.5 text-xs',
-    medium: 'px-5 py-3 text-sm',
-    large: 'px-6 py-3.5 text-base',
+  const setIconSize = (el: string) => {
+    if (el === 'small') return 12;
+    return el === 'medium' ? 18 : 20;
   };
 
-  const Icon = icon && FontAwesomeIcons[icon];
-
-  return Icon ? (
+  return (
     <button
-      className={[BASE, dimensions[size], mode, 'grid grid-cols-inputIcon'].join(' ')}
-      type="button"
+      className={[
+        styles.button,
+        styles.dimensions[size],
+        mode,
+        icon && 'grid grid-cols-buttonIcon items-center',
+      ].join(' ')}
+      type={submit ? 'submit' : 'button'}
       {...props}
     >
-      <Icon className="justify-self-center" size={18} fill="white" />
-      <span className="ml-1">{label}</span>
-    </button>
-  ) : (
-    <button
-      className={[BASE, dimensions[size], mode].join(' ')}
-      type="button"
-      {...props}
-    >
-      {label}
+      {icon && <Icon size={setIconSize(size)} fill="white" type={icon} />}
+      <span className="justify-self-start">{label}</span>
     </button>
   );
 };
@@ -43,6 +36,7 @@ Button.defaultProps = {
   onClick: null,
   primary: false,
   size: 'medium',
+  submit: false,
 };
 
 export default Button;

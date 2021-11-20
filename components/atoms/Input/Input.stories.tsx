@@ -28,3 +28,18 @@ WithIcon.args = {
   placeholder: 'Placeholder',
   type: 'text',
 };
+
+export const WithLabel = Template.bind({});
+WithLabel.args = {
+  label: 'Label',
+  placeholder: 'Placeholder',
+  type: 'text',
+};
+
+export const WithIconAndLabel = Template.bind({});
+WithIconAndLabel.args = {
+  icon: 'FaRegEnvelope',
+  label: 'Label',
+  placeholder: 'Placeholder',
+  type: 'text',
+};

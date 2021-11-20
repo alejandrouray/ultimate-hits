@@ -1,29 +1,40 @@
 /* eslint-disable import/prefer-default-export */
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { FirebaseUser } from 'types';
 import config from './config';
+import ERRORS from '../constants/errors';
+import { IAuth } from '../interfaces/Auth';
+import { setAuthMethod, setAuthProvider } from './utils/Auth';
 
 initializeApp(config);
 
-export const loginWithGoogle = async (): Promise<FirebaseUser | string> => {
+export const signUpAllMethods = async (props: IAuth): Promise<FirebaseUser | string> => {
   const auth = getAuth();
-  const googleProvider = new GoogleAuthProvider();
+  const { emailAddress, password, provider } = props;
+  const authProvider = provider && setAuthProvider(provider);
 
-  try {
-    const { user } = await signInWithPopup(auth, googleProvider);
-    const {
-      uid, displayName, email, emailVerified, photoURL,
-    } = user;
+  return new Promise((resolve, reject) => {
+    const method = setAuthMethod({
+      auth, authProvider, emailAddress, password,
+    });
 
-    return {
-      uid,
-      emailVerified,
-      ...displayName && { displayName },
-      ...email && { email },
-      ...photoURL && { photoURL },
-    };
-  } catch (err: any) {
-    return err && err.message;
-  }
+    if (!method) throw new Error('Not valid data');
+
+    return method
+      .then(({ user }) => {
+        const {
+          uid, displayName, email, emailVerified, photoURL,
+        } = user;
+
+        resolve({
+          uid,
+          emailVerified,
+          ...displayName && { displayName },
+          ...email && { email },
+          ...photoURL && { photoURL },
+        });
+      })
+      .catch((err) => reject(ERRORS[err.code] || err.code));
+  });
 };
